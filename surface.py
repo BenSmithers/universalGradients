@@ -13,6 +13,18 @@ class GradientSet:
         self._default_norm = np.ones(int(len(params)/(order+1)))
 
         self._n_params = int(len(params)/(order+1))
+        self._order = order
+
+    @property
+    def state(self):
+        return {"order":self._order,
+                "params":self._params.flatten().tolist()}
+    
+    @classmethod
+    def from_state(cls, state_dict)->'GradientSet':
+        return cls(state_dict["order"],
+                   *state_dict["params"])
+
 
     @property
     def n_params(self):
@@ -31,3 +43,4 @@ class GradientSet:
         for params in self._params:
             outstr+="+ {}x^3 + {}x^2 + {}x + {}\n".format(*params)
         return outstr
+    
