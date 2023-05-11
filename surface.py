@@ -12,6 +12,14 @@ class SurfaceSample:
         _params = np.reshape(params, (int(n_surfaces), param_per_surface))
         self._surfaces = [Surface(degree, *sub_params) for sub_params in _params]
 
+    @property
+    def surfaces(self):
+        return self._surfaces
+    
+
+    def __iter__(self):
+        return self._surfaces.__iter__()
+
     def eval(self, points):
         return np.array([sf.eval(points) for sf in self._surfaces])
 
